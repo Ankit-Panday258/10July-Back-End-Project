@@ -3,6 +3,8 @@ import cors from'cors';
 import cookieParser from'cookie-parser';
 import morgan from 'morgan';
 import userRoutes from './routes/user.routes.js'
+import errorMonitor  from 'nodemailer/lib/xoauth2/index.js';
+import errorMiddleware from './middlewares/error.middlewares.js';
 const app = express();
 app.use(express.json());
  
@@ -25,5 +27,7 @@ app.use('/api/v1/user' , userRoutes)
 app.all('*' ,(req,res) =>{
     res.status(400).send('oops!! 400 page not found');
 })
+
+app.use(errorMiddleware);
 
 export default app;
